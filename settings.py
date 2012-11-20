@@ -5,7 +5,7 @@ class Config(object):
     DEBUG = True
     APP_SECRET_KEY = '1234567890'
     PO_STORAGE_PATH = "/Users/dj/po_path"
-    DBSTRING = "sqlite://test.sq3"
+    DBSTRING = "sqlite:///test.sq3"
 
 class ProductionConfig(Config):
     DEBUG = False

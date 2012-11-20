@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from sqlalchemy import create_engine
-engine = create_engine('sqlite:///:memory:', echo=True)
-
+import re
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String, DateTime, \
         Enum, Boolean, BigInteger, UnicodeText, ForeignKey
@@ -16,12 +14,20 @@ Base = declarative_base()
 class User(Base):
     __tablename__ = 'user'
     id = Column(Integer, primary_key=True)
+    # use email as loginname
     email = Column(String(50))
+    # name must be written in english
     name = Column(String(50))
-    password = Column(String(50))
+    password = Column(String(32))
     last_authtime = Column(DateTime)
     type = Column(Enum('Translator', 'Admin','Staff', name="User Type"))
     is_active = Column(Boolean())
+    def validate_email(self):
+        pass
+    def validate_name(self):
+        pass
+    def __unicode__(self):
+        return self.name
 
 class Tran(Base):
     __tablename__ = 'tran'
