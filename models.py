@@ -4,11 +4,13 @@ import re
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String, DateTime, \
         Enum, Boolean, BigInteger, UnicodeText, ForeignKey
+import flask
+from sqlalchemy.orm import scoped_session, sessionmaker
 
+
+Session = sessionmaker(autocommit=True)
 
 Base = declarative_base()
-
-# need to make dashboard?
 
 
 class User(Base):
@@ -28,6 +30,14 @@ class User(Base):
         pass
     def __unicode__(self):
         return self.name
+
+def create_test():
+    engine = flask.current_app.engine
+    Session = sessionmaker(bind=engine)
+    session = Session()
+    a = User(email="darjeeling@gmail.com",name="kwonhan",password="1234",type="Admin",is_active=True)
+    session.add(a)
+    session.commit()
 
 class Tran(Base):
     __tablename__ = 'tran'
